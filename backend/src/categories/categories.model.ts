@@ -5,6 +5,7 @@ import { Property } from 'src/properties/properties.model';
 import { PropertyCategory } from 'src/properties/property-category.model';
 
 interface CategoryCreationAttributes {
+    parentId: number;
     name: string,
     description: string
 }
@@ -22,6 +23,9 @@ export class Category extends Model<Category, CategoryCreationAttributes>{
 
     @BelongsTo(() => Category)
     parentCategory: Category;
+
+    @HasMany(() => Category)
+    childCategories: Category[];
 
     @ApiProperty({ example: 'Название категории', description: 'Название категории' })
     @Column({ type: DataType.STRING, allowNull: false })
