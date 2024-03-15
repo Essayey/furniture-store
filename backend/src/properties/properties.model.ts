@@ -1,7 +1,8 @@
-import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany, HasMany } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from 'src/categories/categories.model';
 import { PropertyCategory } from './property-category.model';
+import { ProductProperty } from 'src/products/product-property.model';
 
 
 interface PropertyCreationAttributes {
@@ -35,4 +36,7 @@ export class Property extends Model<Property, PropertyCreationAttributes>{
 
     @BelongsToMany(() => Category, () => PropertyCategory)
     categories: Category[]
+
+    @HasMany(() => ProductProperty)
+    productProperties: ProductProperty[];
 }

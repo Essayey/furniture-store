@@ -7,12 +7,13 @@ import { Category } from 'src/categories/categories.model';
 import { Review } from 'src/reviews/reviews.model';
 import { Cart } from 'src/carts/carts.model';
 import { OrderItem } from 'src/orders/order-item.model';
+import { ProductProperty } from './product-property.model';
 
 @Module({
   controllers: [ProductsController],
   providers: [ProductsService],
   imports: [
-    SequelizeModule.forFeature([Product, Category, Review, Cart, OrderItem]),
+    SequelizeModule.forFeature([Product, Category, Review, Cart, OrderItem, ProductProperty]),
   ]
 })
 export class ProductsModule {}

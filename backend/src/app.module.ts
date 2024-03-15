@@ -21,6 +21,7 @@ import { Property } from "./properties/properties.model";
 import { PropertyCategory } from "./properties/property-category.model";
 import { Order } from "./orders/orders.model";
 import { OrderItem } from "./orders/order-item.model";
+import { ProductProperty } from "./products/product-property.model";
 
 @Module({
     controllers: [],
@@ -36,7 +37,7 @@ import { OrderItem } from "./orders/order-item.model";
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Role, UserRoles, Category, Product, Review, Cart, Property, PropertyCategory, Order, OrderItem],
+            models: [User, Role, UserRoles, Category, Product, Review, Cart, Property, PropertyCategory, Order, OrderItem, ProductProperty],
             autoLoadModels: true
           }),
         UsersModule,
