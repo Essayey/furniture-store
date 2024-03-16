@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CartsService } from './carts.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Корзина')
 @Controller('carts')
 export class CartsController {
   constructor(private readonly cartsService: CartsService) {}
@@ -31,4 +33,5 @@ export class CartsController {
   remove(@Param('id') id: string) {
     return this.cartsService.remove(+id);
   }
+
 }

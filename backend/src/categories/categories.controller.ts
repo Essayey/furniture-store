@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Категории')
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -30,5 +32,15 @@ export class CategoriesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoriesService.remove(+id);
+  }
+
+  @Put(['addPropertyToCategory/:categoryId/:propertyId'])
+  addPropertyToCategory(@Param('categoryId') categoryId: string, @Param('propertyId') propertyId: string) {
+    return this.categoriesService.addPropertyToCategory(+categoryId, +propertyId);
+  }
+
+  @Delete(['removePropertyFromCategory/:categoryId/:propertyId'])
+  removePropertyFromCategory(@Param('categoryId') categoryId: string, @Param('propertyId') propertyId: string) {
+    return this.categoriesService.removePropertyFromCategory(+categoryId, +propertyId);
   }
 }

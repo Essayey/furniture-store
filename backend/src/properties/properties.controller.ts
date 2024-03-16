@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Свойства')
 @Controller('properties')
 export class PropertiesController {
   constructor(private readonly propertiesService: PropertiesService) {}
@@ -15,6 +17,11 @@ export class PropertiesController {
   @Get()
   findAll() {
     return this.propertiesService.findAll();
+  }
+
+  @Get('findAllByCategoryId/:id')
+  findAllByCategoryId(@Param('id') id: string) {
+    return this.propertiesService.findAllByCategoryId(+id);
   }
 
   @Get(':id')

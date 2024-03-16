@@ -12,6 +12,9 @@ import { ProductProperty } from 'src/products/product-property.model';
   providers: [PropertiesService],
   imports: [
     SequelizeModule.forFeature([Property, Category, PropertyCategory, ProductProperty]),
+  ],
+  exports: [
+    PropertiesService
   ]
 })
 export class PropertiesModule {}

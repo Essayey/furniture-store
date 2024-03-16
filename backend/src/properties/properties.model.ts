@@ -20,7 +20,7 @@ export class Property extends Model<Property, PropertyCreationAttributes>{
 
     @ApiProperty({ example: 'Название свойства', description: 'Название свойства' })
     @Column({ type: DataType.STRING, allowNull: false })
-    value: string;
+    name: string;
 
     @ApiProperty({ example: ['option1', 'option2'], description: 'Возможные варианты. Если свойство может принимать любое значение то пустой массив [].' })
     @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })
