@@ -22,6 +22,7 @@ export class PropertiesService {
     return properties
   }
 
+
   async findAllByCategoryId(id: number) {
     const propertyCategories = await this.propertyCategoryRepository.findAll({ where: { categoryId: id }, })
     const properties = await Promise.all(propertyCategories.map(async propertyCategory => {

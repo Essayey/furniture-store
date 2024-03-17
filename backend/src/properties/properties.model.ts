@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Category } from 'src/categories/categories.model';
 import { PropertyCategory } from './property-category.model';
 import { ProductProperty } from 'src/products/product-property.model';
+import { Product } from 'src/products/products.model';
 
 
 interface PropertyCreationAttributes {
@@ -37,6 +38,6 @@ export class Property extends Model<Property, PropertyCreationAttributes>{
     @BelongsToMany(() => Category, () => PropertyCategory)
     categories: Category[]
 
-    @HasMany(() => ProductProperty)
-    productProperties: ProductProperty[];
+    @BelongsToMany(() => Product, () => ProductProperty)
+    products: Product[];
 }

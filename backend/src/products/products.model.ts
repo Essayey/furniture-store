@@ -1,17 +1,17 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasMany, BelongsToMany } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from '../categories/categories.model'; // Подключаем модель категории
 import { Review } from '../reviews/reviews.model'; // Подключаем модель отзыва
 import { Cart } from 'src/carts/carts.model';
 import { OrderItem } from 'src/orders/order-item.model';
 import { ProductProperty } from './product-property.model';
+import { Property } from 'src/properties/properties.model';
 
-interface ProductCreationAttributes {
+export interface ProductCreationAttributes {
     name: string,
     description: string
     img: string
-    categoryId: string
-    collectionId?: string
+    categoryId: number
     amount: number
     price: number
 }
@@ -62,6 +62,6 @@ export class Product extends Model<Product, ProductCreationAttributes>{
     @HasMany(() => OrderItem)
     orderItems: OrderItem[];
 
-    @HasMany(() => ProductProperty)
-    productProperties: ProductProperty[];
+    @BelongsToMany(() => Property, () => ProductProperty)
+    properties: ProductProperty[];
 }

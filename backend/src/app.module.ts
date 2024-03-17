@@ -22,11 +22,18 @@ import { PropertyCategory } from "./properties/property-category.model";
 import { Order } from "./orders/orders.model";
 import { OrderItem } from "./orders/order-item.model";
 import { ProductProperty } from "./products/product-property.model";
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { NestjsFormDataModule } from "nestjs-form-data";
 
 @Module({
     controllers: [],
     providers: [],
     imports: [
+        NestjsFormDataModule,
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'static'),
+        }),
         ConfigModule.forRoot({
             envFilePath: `.${process.env.NODE_ENV}.env`
         }),
