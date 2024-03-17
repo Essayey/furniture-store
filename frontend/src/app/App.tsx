@@ -1,11 +1,12 @@
-import { Button } from "@/shared/ui";
+import { RouterProvider } from "react-router-dom";
+import { AppRouter } from "./appRouter";
+import { Provider } from "react-redux";
+import { appStore } from "./providers";
 
-function App() {
+export const AppEntry = () => {
   return (
-    <div>
-      <Button variant={"destructive"}>Hello</Button>
-    </div>
+    <Provider store={appStore}>
+      <RouterProvider router={AppRouter()} />
+    </Provider>
   );
-}
-
-export default App;
+};
