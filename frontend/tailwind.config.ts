@@ -19,6 +19,14 @@ const config = {
     },
     extend: {
       colors: {
+        backgroundColor: "#E7EAF0",
+        textPrimary: "#214911",
+        textSecondary: "#FFFFFF",
+        accentPrimary: "#216F75",
+        accentSecondary: "#38755B",
+        accentTertiary: "#8C9D78",
+        accentQuaternary: "#AFC09B",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
