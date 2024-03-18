@@ -1,4 +1,5 @@
 import { AboutPage } from "@/pages/about";
+import { AdminPage, CategoriesPage } from "@/pages/admin";
 import { CartPage } from "@/pages/cart";
 import { MainPage } from "@/pages/main";
 import { Routes } from "@/shared/consts";
@@ -24,7 +25,13 @@ export const AppRouter = () => {
         },
         {
           path: Routes.admin,
-          // element: <CartPage />,
+          element: <AdminPage />,
+          children: [
+            {
+              path: Routes.categories,
+              element: <CategoriesPage />,
+            },
+          ],
         },
       ],
     },
