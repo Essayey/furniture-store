@@ -1,12 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    baseUrl: import.meta.VITE_APP_API,
-
+    baseUrl: __API__,
     prepareHeaders: (headers) => {
       headers.set("Content-Type", "application/json");
+      headers.set("Access-Control-Allow-Origin", "*");
       return headers;
     },
   }),
