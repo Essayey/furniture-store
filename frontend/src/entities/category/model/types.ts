@@ -1,15 +1,12 @@
-export type Property = {
-  id:number,
-  name:string,
-  options: string[],
-  description:string,
-  optional:boolean
-}
+import { Property } from "@/entities/property";
+
 export type Category = {
   id: number;
-  parentId: number;
+  parentId: number | null;
   name: string;
   description: string;
   childCategories: Category[];
-  properties:
+  createdAt: string;
+  updatedAt: string;
+  properties?: Property[];
 };

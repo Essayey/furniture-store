@@ -4,4 +4,6 @@ export type Property = {
   options: string[];
   description: string;
   optional: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
