@@ -1,11 +1,17 @@
-import { useGetAllCategoriesQuery } from "@/entities/category";
-import { memo } from "react";
+import {
+  useAllCategoriesQuery,
+  useCreateCategoriesMutation,
+  usePathCategoryByIdMutation,
+} from "@/entities/category";
+import { memo, useEffect } from "react";
 
 export const MainPage = memo(() => {
-  const { data, isLoading } = useGetAllCategoriesQuery();
-  console.log();
-  if (isLoading) return null;
-  if (data) console.log(data);
+  const { data, isLoading } = useAllCategoriesQuery();
+  const [createCategory] = useCreateCategoriesMutation();
+  const [updateCategory] = usePathCategoryByIdMutation();
+
   console.log(data);
-  return <div>asdfasdf</div>;
+  return (
+    <div>{data?.map((category) => category?.childCategories.map((category) => category.name))}</div>
+  );
 });
