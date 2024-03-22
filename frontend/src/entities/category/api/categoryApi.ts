@@ -1,25 +1,51 @@
 import { baseApi } from "@/shared/api";
 import {
-  getAllCategoriesDtoResponse,
-  getCategoriesByIdDtoResponse,
-  getCategoriesByIdDtoRequest,
+  allCategoriesDtoResponse,
+  categoriesByIdDtoRequest,
+  categoriesByIdDtoResponse,
+  createCategoriesDtoRequest,
+  pathCategoryByIdDtoRequest,
+  pathCategoryByIdDtoResponse,
 } from "./categoryDto";
+import { CATEGORIES_TAG } from "@/shared/api/tags";
 
 export const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getAllCategories: build.query<getAllCategoriesDtoResponse, void>({
+    allCategories: build.query<allCategoriesDtoResponse, void>({
       query: () => ({
         url: `/categories`,
         method: "GET",
       }),
+      providesTags: [CATEGORIES_TAG],
     }),
-    getCategoriesById: build.query<getCategoriesByIdDtoResponse, getCategoriesByIdDtoRequest>({
+
+    categoriesById: build.query<categoriesByIdDtoResponse, categoriesByIdDtoRequest>({
       query: ({ id }) => ({
         url: `/categories/${id}`,
         method: "GET",
       }),
     }),
+    createCategories: build.mutation<void, createCategoriesDtoRequest>({
+      query: ({ description, name, parentId }) => ({
+        url: "/categories",
+        method: "POST",
+        body: { description, name, parentId },
+      }),
+      invalidatesTags: [CATEGORIES_TAG],
+    }),
+    pathCategoryById: build.mutation<pathCategoryByIdDtoResponse, pathCategoryByIdDtoRequest>({
+      query: ({ id, description, name, parentId }) => ({
+        url: `/categories/${id}`,
+        method: "PATCH",
+        body: { description, name, parentId },
+      }),
+      invalidatesTags: [CATEGORIES_TAG],
+    }),
   }),
 });
-export const { useGetAllCategoriesQuery, useGetCategoriesByIdQuery, useLazyGetAllCategoriesQuery } =
-  categoryApi;
+export const {
+  useAllCategoriesQuery,
+  useCategoriesByIdQuery,
+  useCreateCategoriesMutation,
+  usePathCategoryByIdMutation,
+} = categoryApi;
