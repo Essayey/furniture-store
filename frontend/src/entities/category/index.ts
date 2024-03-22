@@ -1,6 +1,7 @@
 export {
-  useGetAllCategoriesQuery,
   categoryApi,
-  useGetCategoriesByIdQuery,
-  useLazyGetAllCategoriesQuery,
+  useAllCategoriesQuery,
+  useCategoriesByIdQuery,
+  useCreateCategoriesMutation,
+  usePathCategoryByIdMutation,
 } from "./api/categoryApi";
