@@ -1,21 +1,37 @@
 import { Category } from "../model/types";
 
-export type allCategoriesDtoResponse = Category[];
+export type AllCategoriesDtoRequset = void;
+export type AllCategoriesDtoResponse = Category[];
 
-export type categoriesByIdDtoResponse = Category;
-export type categoriesByIdDtoRequest = { id: string };
+export type CategoriesByIdDtoResponse = Category;
+export type CategoriesByIdDtoRequest = { id: string };
 
-// export type createCategoriesDtoResponse = {};
-export type createCategoriesDtoRequest = {
+export type CreateCategoriesDtoResponse = Category;
+export type CreateCategoriesDtoRequest = {
   name: string;
   parentId: number;
   description: string;
 };
 
-export type pathCategoryByIdDtoResponse = Category;
-export type pathCategoryByIdDtoRequest = {
+export type PathCategoryByIdDtoResponse = Category;
+export type PathCategoryByIdDtoRequest = {
   id: number;
   parentId?: number;
   name?: string;
   description?: string;
+};
+
+export type DeleteCategoryByIdDtoResponse = void;
+export type DeleteCategoryByIdDtoRequest = { id: string };
+
+export type AddPropertyToCategoryDtoResponse = void;
+export type AddPropertyToCategoryDtoRequest = {
+  categoryId: number;
+  propertyId: number;
+};
+
+export type DeletePropertyFromCategoryDtoResponse = void;
+export type DeletePropertyFromCategoryDtoRequest = {
+  categoryId: number;
+  propertyId: number;
 };
