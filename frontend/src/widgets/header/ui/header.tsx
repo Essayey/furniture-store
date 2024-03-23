@@ -7,13 +7,16 @@ export const Header = () => {
     <header className=" bg-accentPrimary  py-6">
       <div className=" flex gap-5 justify-center ">
         <Button asChild>
-          <Link to={Routes.about}> About page</Link>
+          <Link to={Routes.about}>About page</Link>
         </Button>
         <Button asChild>
-          <Link to={Routes.cart}> Cart page</Link>
+          <Link to={Routes.cart}>Cart page</Link>
         </Button>
         <Button asChild>
-          <Link to={Routes.main}> Main page</Link>
+          <Link to={Routes.main}>Main page</Link>
+        </Button>
+        <Button asChild>
+          <Link to={Routes.admin}>Admin page</Link>
         </Button>
       </div>
     </header>
