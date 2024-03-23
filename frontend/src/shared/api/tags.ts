@@ -1,1 +1,3 @@
 export const CATEGORIES_TAG = "CATEGORIES_TAG";
+export const PROPERTY_TAG = "PROPERTY_TAG";
+export const PRODUCTS_TAG = "PRODUCTS_TAG";
