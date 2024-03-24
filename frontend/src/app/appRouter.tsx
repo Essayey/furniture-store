@@ -1,5 +1,5 @@
 import { AboutPage } from "@/pages/about";
-import { AdminPage, CategoriesPage } from "@/pages/admin";
+import { AdminPage, CategoriesPage, ProductsPage } from "@/pages/admin";
 import { CartPage } from "@/pages/cart";
 import { MainPage } from "@/pages/main";
 import { Routes } from "@/shared/consts";
@@ -30,6 +30,10 @@ export const AppRouter = () => {
             {
               path: Routes.categories,
               element: <CategoriesPage />,
+            },
+            {
+              path: Routes.products,
+              element: <ProductsPage />,
             },
           ],
         },
