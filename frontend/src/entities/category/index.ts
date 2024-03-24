@@ -8,4 +8,5 @@ export {
   useAddPropertyToCategoryMutation,
   useRemovePropertyFromCategoryMutation,
   useFinalCategoriesQuery,
+  useSetIsFinalCategoryMutation,
 } from "./api/categoryApi";
