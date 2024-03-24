@@ -17,6 +17,8 @@ import {
   FinalCategoriesDtoResponse,
   PathCategoryByIdDtoRequest,
   PathCategoryByIdDtoResponse,
+  SetIsFinalCategoryDtoRequest,
+  SetIsFinalCategoryDtoResponse,
 } from "./categoryDto";
 import { findLeafCategoryWithProperties } from "../lib/transformCategory";
 
@@ -78,6 +80,16 @@ export const categoryApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["CATEGORIES_TAG"],
     }),
+    setIsFinalCategory: build.mutation<SetIsFinalCategoryDtoResponse, SetIsFinalCategoryDtoRequest>(
+      {
+        query: ({ id, isFinal }) => ({
+          url: `/categories/setIsFinal/${id}`,
+          method: "PUT",
+          body: { isFinal },
+        }),
+        invalidatesTags: ["CATEGORIES_TAG"],
+      },
+    ),
     removePropertyFromCategory: build.mutation<
       DeletePropertyFromCategoryDtoResponse,
       DeletePropertyFromCategoryDtoRequest
@@ -99,4 +111,5 @@ export const {
   useAddPropertyToCategoryMutation,
   useRemovePropertyFromCategoryMutation,
   useFinalCategoriesQuery,
+  useSetIsFinalCategoryMutation,
 } = categoryApi;

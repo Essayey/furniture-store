@@ -32,6 +32,8 @@ export type AddPropertyToCategoryDtoRequest = {
   categoryId: number;
   propertyId: number;
 };
+export type SetIsFinalCategoryDtoResponse = Category;
+export type SetIsFinalCategoryDtoRequest = { id: number; isFinal: boolean };
 
 export type DeletePropertyFromCategoryDtoResponse = void;
 export type DeletePropertyFromCategoryDtoRequest = {
