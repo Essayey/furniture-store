@@ -13,9 +13,12 @@ import {
   DeleteCategoryByIdDtoResponse,
   DeletePropertyFromCategoryDtoRequest,
   DeletePropertyFromCategoryDtoResponse,
+  FinalCategoriesDtoRequest,
+  FinalCategoriesDtoResponse,
   PathCategoryByIdDtoRequest,
   PathCategoryByIdDtoResponse,
 } from "./categoryDto";
+import { findLeafCategoryWithProperties } from "../lib/transformCategory";
 
 export const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -26,7 +29,13 @@ export const categoryApi = baseApi.injectEndpoints({
       }),
       providesTags: ["CATEGORIES_TAG"],
     }),
-
+    finalCategories: build.query<FinalCategoriesDtoResponse, FinalCategoriesDtoRequest>({
+      query: () => ({
+        url: `/categories/getFinalCategories`,
+        method: "GET",
+      }),
+      providesTags: ["CATEGORIES_TAG"],
+    }),
     categoriesById: build.query<CategoriesByIdDtoResponse, CategoriesByIdDtoRequest>({
       query: ({ id }) => ({
         url: `/categories/${id}`,
@@ -89,4 +98,5 @@ export const {
   useDeleteCategoryByIdMutation,
   useAddPropertyToCategoryMutation,
   useRemovePropertyFromCategoryMutation,
+  useFinalCategoriesQuery,
 } = categoryApi;
