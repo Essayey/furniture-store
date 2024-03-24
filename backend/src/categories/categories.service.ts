@@ -7,6 +7,7 @@ import { PropertyCategory } from 'src/properties/property-category.model';
 import { PropertiesService } from 'src/properties/properties.service';
 import { Model } from 'sequelize';
 import { Property } from 'src/properties/properties.model';
+import { SetIsFinalDto } from './dto/setIsFinal.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -46,6 +47,13 @@ export class CategoriesService {
     return category
   }
 
+  async setIsFinal(id: number, setIsFinalDto: SetIsFinalDto) {
+    const category = await this.categoryRepository.findOne({ where: { id } })
+    category.set({ isFinal: setIsFinalDto.isFinal })
+    category.save()
+    return category;
+  }
+
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.categoryRepository.findOne({ where: { id } })
     category.set({ ...updateCategoryDto })
@@ -58,6 +66,11 @@ export class CategoriesService {
     category.destroy()
   }
 
+  async getFinalCategories() {
+    const categories = await this.categoryRepository.findAll({ where: { isFinal: true } })
+    if (!categories) return []
+    return categories
+  }
 
   async addPropertyToCategory(categoryId: number, propertyId: number) {
     const category = await this.categoryRepository.findOne({ where: { id: categoryId } })

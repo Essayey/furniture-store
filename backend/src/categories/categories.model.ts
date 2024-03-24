@@ -35,6 +35,10 @@ export class Category extends Model<Category, CategoryCreationAttributes>{
     @Column({ type: DataType.STRING, allowNull: false })
     description: string;
 
+    @ApiProperty({ example: 'false', description: 'Можно ли по категории создать продукт?' })
+    @Column({ type: DataType.BOOLEAN, defaultValue: false })
+    isFinal: boolean;
+
     @HasMany(() => Product)
     products: Product[];
 
