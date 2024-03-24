@@ -8,7 +8,12 @@ export type ProductByIdDtoResponse = Product;
 export type ProductByIdDtoRequest = { id: string };
 
 export type CreateProductDtoResponse = Product;
-export type CreateProductDtoRequest = Product;
+export type CreateProductDtoRequest = Omit<Product, "properties"> & {
+  properties: {
+    propertyId: number;
+    value: string;
+  }[];
+};
 
 export type PathProductByIdDtoResponse = Product;
 export type PathProductByIdDtoRequest = Partial<
