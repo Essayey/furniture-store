@@ -1,13 +1,13 @@
 import {
   useAllCategoriesQuery,
-  useCreateCategoriesMutation,
+  useCreateCategoryMutation,
   usePathCategoryByIdMutation,
 } from "@/entities/category";
 import { memo, useEffect } from "react";
 
 export const MainPage = memo(() => {
   const { data, isLoading } = useAllCategoriesQuery();
-  const [createCategory] = useCreateCategoriesMutation();
+  const [createCategory] = useCreateCategoryMutation();
   const [updateCategory] = usePathCategoryByIdMutation();
 
   console.log(data);

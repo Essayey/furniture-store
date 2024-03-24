@@ -8,6 +8,9 @@ export const AdminPage = () => {
       <Button asChild>
         <Link to={Routes.products}>Создать продукт</Link>
       </Button>
+      <Button asChild>
+        <Link to={Routes.categories}>Категории</Link>
+      </Button>
       <Outlet />
     </div>
   );
