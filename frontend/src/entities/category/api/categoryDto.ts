@@ -4,7 +4,7 @@ export type AllCategoriesDtoRequset = void;
 export type AllCategoriesDtoResponse = Category[];
 
 export type FinalCategoriesDtoRequest = void;
-export type FinalCategoriesDtoResponse = Omit<Category, "childCategories" | "properties">;
+export type FinalCategoriesDtoResponse = Omit<Category, "childCategories" | "properties">[];
 
 export type CategoriesByIdDtoResponse = Category;
 export type CategoriesByIdDtoRequest = { id: number };

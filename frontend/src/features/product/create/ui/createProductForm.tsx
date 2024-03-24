@@ -1,12 +1,8 @@
-import { useForm } from "react-hook-form";
-import { ProductFormSchema, productFormSchema } from "../model/productFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useFinalCategoriesQuery } from "@/entities/category";
 import { useCreateProductMutation } from "@/entities/product";
+import { useFindAllPropertiesByCategoryIdQuery } from "@/entities/property";
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogTrigger,
   Form,
   FormControl,
   FormDescription,
@@ -21,16 +17,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useAllCategoriesQuery } from "@/entities/category";
-import { useFindAllPropertiesByCategoryIdQuery } from "@/entities/property";
+import { useForm } from "react-hook-form";
+import { ProductFormSchema, productFormSchema } from "../model/productFormSchema";
 
 export const CreateProductForm = () => {
   const [createProduct] = useCreateProductMutation();
-  const { data: categories, isLoading } = useAllCategoriesQuery();
+  const { data: finalCategories, isLoading: isFinalCategoriesLoading } = useFinalCategoriesQuery();
   const [categoryId, setCategoryId] = useState<number | null>(null);
-  const { data: properties } = useFindAllPropertiesByCategoryIdQuery({ id: categoryId });
-  console.log(categories);
+  const { data: properties, isLoading: isPropertiesLoading } =
+    useFindAllPropertiesByCategoryIdQuery({
+      id: categoryId,
+    });
+
   const productForm = useForm<ProductFormSchema>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
@@ -45,6 +45,7 @@ export const CreateProductForm = () => {
   });
   const onSubmit = (data: ProductFormSchema) => {
     const { amount, categoryId, description, name, price, properties, image } = data;
+    console.log(data);
     createProduct({
       amount,
       categoryId,
@@ -81,7 +82,7 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Цена продукта</FormLabel>
                 <FormControl>
-                  <Input placeholder="введите цену продукта" {...field} />
+                  <Input type="number" placeholder="введите цену продукта" {...field} />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -95,7 +96,21 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Количество продуктов</FormLabel>
                 <FormControl>
-                  <Input placeholder="введите количество продуктов" {...field} />
+                  <Input type="number" placeholder="введите количество продуктов" {...field} />
+                </FormControl>
+                <FormDescription>This is your public display name.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={productForm.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Описание продукта</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="введите описание продуктов" {...field} />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -118,64 +133,66 @@ export const CreateProductForm = () => {
           />
           <FormField
             control={productForm.control}
-            name="properties"
-            render={({ field }) => (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>Выбрать свойство</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <FormItem>
-                    <FormLabel>Уникальный идентификатор</FormLabel>
-                    <FormControl>
-                      <Select>
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent {...field}>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormDescription>This is your public display name.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                </DialogContent>
-              </Dialog>
-            )}
-          />
-          <FormField
-            control={productForm.control}
             name="categoryId"
             render={({ field }) => (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>Выбрать категорию</Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <FormItem>
-                    <FormLabel>Уникальный идентификатор</FormLabel>
-                    <FormControl>
-                      <Select>
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent {...field}>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormDescription>This is your public display name.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                </DialogContent>
-              </Dialog>
+              <FormItem>
+                <FormLabel>Уникальный идентификатор</FormLabel>
+                <FormControl>
+                  <Select onValueChange={(e) => setCategoryId(+e)}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Категории" />
+                    </SelectTrigger>
+                    <SelectContent {...field}>
+                      {finalCategories?.map((category) => (
+                        <SelectItem
+                          // onChange={() => setCategoryId(category.id)}
+                          key={category.id}
+                          value={String(category.id)}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormDescription>This is your public display name.</FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
           />
+          {properties?.map((property) => (
+            <FormField
+              key={property.id}
+              control={productForm.control}
+              name="properties"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{property.name}</FormLabel>
+                  <FormControl>
+                    {property.options.length ? (
+                      <Select key={property.id}>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Свойства" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {property.options.map((option) => (
+                            <SelectItem {...field} value={option} key={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Input placeholder="Введите свойство" />
+                    )}
+                  </FormControl>
+                  <FormDescription>This is your public display name.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+
           <Button type="submit">Submit</Button>
         </form>
       </Form>

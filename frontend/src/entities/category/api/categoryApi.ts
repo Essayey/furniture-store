@@ -20,7 +20,6 @@ import {
   SetIsFinalCategoryDtoRequest,
   SetIsFinalCategoryDtoResponse,
 } from "./categoryDto";
-import { findLeafCategoryWithProperties } from "../lib/transformCategory";
 
 export const categoryApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -34,7 +33,7 @@ export const categoryApi = baseApi.injectEndpoints({
     finalCategories: build.query<FinalCategoriesDtoResponse, FinalCategoriesDtoRequest>({
       query: () => ({
         url: `/categories/getFinalCategories`,
-        method: "GET",
+        method: "POST",
       }),
       providesTags: ["CATEGORIES_TAG"],
     }),
@@ -112,4 +111,5 @@ export const {
   useRemovePropertyFromCategoryMutation,
   useFinalCategoriesQuery,
   useSetIsFinalCategoryMutation,
+  useLazyFinalCategoriesQuery,
 } = categoryApi;

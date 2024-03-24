@@ -74,4 +74,5 @@ export const {
   useFindAllPropertiesByCategoryIdQuery,
   usePathPropertyByIdMutation,
   usePropertyByIdQuery,
+  useLazyFindAllPropertiesByCategoryIdQuery,
 } = propertyApi;

@@ -7,4 +7,5 @@ export {
   useFindAllPropertiesByCategoryIdQuery,
   usePathPropertyByIdMutation,
   usePropertyByIdQuery,
+  useLazyFindAllPropertiesByCategoryIdQuery,
 } from "./api/propertyApi";
