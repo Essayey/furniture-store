@@ -1,3 +1,3 @@
 export const CategoriesPage = () => {
-  return <div>CategoriesPage</div>;
+  return <div>Cat</div>;
 };

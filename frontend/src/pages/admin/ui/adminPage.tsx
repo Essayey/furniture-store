@@ -1,9 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Routes } from "@/shared/consts";
+import { Button } from "@/shared/ui";
+import { Link, Outlet } from "react-router-dom";
 
 export const AdminPage = () => {
   return (
     <div>
-      Admin Page
+      <Button asChild>
+        <Link to={Routes.products}>Создать продукт</Link>
+      </Button>
       <Outlet />
     </div>
   );
