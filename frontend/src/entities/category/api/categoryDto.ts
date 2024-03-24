@@ -3,8 +3,11 @@ import { Category } from "../model/types";
 export type AllCategoriesDtoRequset = void;
 export type AllCategoriesDtoResponse = Category[];
 
+export type FinalCategoriesDtoRequest = void;
+export type FinalCategoriesDtoResponse = Omit<Category, "childCategories" | "properties">;
+
 export type CategoriesByIdDtoResponse = Category;
-export type CategoriesByIdDtoRequest = { id: string };
+export type CategoriesByIdDtoRequest = { id: number };
 
 export type CreateCategoriesDtoResponse = Category;
 export type CreateCategoriesDtoRequest = {
@@ -22,7 +25,7 @@ export type PathCategoryByIdDtoRequest = {
 };
 
 export type DeleteCategoryByIdDtoResponse = void;
-export type DeleteCategoryByIdDtoRequest = { id: string };
+export type DeleteCategoryByIdDtoRequest = { id: number };
 
 export type AddPropertyToCategoryDtoResponse = void;
 export type AddPropertyToCategoryDtoRequest = {

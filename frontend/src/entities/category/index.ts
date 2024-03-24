@@ -7,4 +7,5 @@ export {
   useDeleteCategoryByIdMutation,
   useAddPropertyToCategoryMutation,
   useRemovePropertyFromCategoryMutation,
+  useFinalCategoriesQuery,
 } from "./api/categoryApi";

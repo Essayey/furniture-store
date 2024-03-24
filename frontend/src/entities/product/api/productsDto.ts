@@ -5,7 +5,7 @@ export type AllProductsDtoResponse = Product[];
 export type AllProductsDtoRequest = void;
 
 export type ProductByIdDtoResponse = Product;
-export type ProductByIdDtoRequest = { id: string };
+export type ProductByIdDtoRequest = { id: number };
 
 export type CreateProductDtoResponse = Product;
 export type CreateProductDtoRequest = Omit<Product, "properties"> & {
@@ -19,11 +19,11 @@ export type PathProductByIdDtoResponse = Product;
 export type PathProductByIdDtoRequest = Partial<
   Pick<Product, "name" | "description" | "amount" | "price">
 > & {
-  id: string;
+  id: number;
 };
 
 export type DeleteProductByIdDtoResponse = void;
-export type DeleteProductByIdDtoRequest = { id: string };
+export type DeleteProductByIdDtoRequest = { id: number };
 
 export type UpdateProductPropertyDtoResponse = {
   id: number;
