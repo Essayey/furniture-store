@@ -33,7 +33,7 @@ export const categoryApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    createCategories: build.mutation<CreateCategoriesDtoResponse, CreateCategoriesDtoRequest>({
+    createCategory: build.mutation<CreateCategoriesDtoResponse, CreateCategoriesDtoRequest>({
       query: ({ description, name, parentId }) => ({
         url: "/categories",
         method: "POST",
@@ -84,7 +84,7 @@ export const categoryApi = baseApi.injectEndpoints({
 export const {
   useAllCategoriesQuery,
   useCategoriesByIdQuery,
-  useCreateCategoriesMutation,
+  useCreateCategoryMutation,
   usePathCategoryByIdMutation,
   useDeleteCategoryByIdMutation,
   useAddPropertyToCategoryMutation,

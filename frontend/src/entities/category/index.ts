@@ -2,7 +2,7 @@ export {
   categoryApi,
   useAllCategoriesQuery,
   useCategoriesByIdQuery,
-  useCreateCategoriesMutation,
+  useCreateCategoryMutation,
   usePathCategoryByIdMutation,
   useDeleteCategoryByIdMutation,
   useAddPropertyToCategoryMutation,
