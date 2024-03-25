@@ -1,18 +1,20 @@
 import { useCreateCategoryMutation } from "@/entities/category"
 import { Button, Input } from "@/shared/ui"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui/dialog"
 import { Label } from "@/shared/ui/label"
 import { SyntheticEvent, useState } from "react"
 
 export type AddCategoryModalProps = {
     parentId: number,
-    parentName: string
+    parentName: string,
+    isFinal: boolean
 }
 
 export const AddCategoryDialog = (props: AddCategoryModalProps) => {
     const {
         parentId,
-        parentName
+        parentName,
+        isFinal
     } = props
     const [create] = useCreateCategoryMutation()
 
@@ -27,7 +29,7 @@ export const AddCategoryDialog = (props: AddCategoryModalProps) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Добавить дочернюю</Button>
+                <Button variant="outline" disabled={isFinal}>Добавить дочернюю</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -63,7 +65,9 @@ export const AddCategoryDialog = (props: AddCategoryModalProps) => {
                             />
                         </div>
                         <DialogFooter>
-                            <Button type="submit">Добавить</Button>
+                            <DialogClose>
+                                <Button type="submit">Добавить</Button>
+                            </DialogClose>
                         </DialogFooter>
                     </div>
                 </form>

@@ -9,4 +9,5 @@ export type Category = {
   createdAt: string;
   updatedAt: string;
   properties?: Property[];
+  isFinal: boolean
 };

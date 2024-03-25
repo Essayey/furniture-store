@@ -16,7 +16,7 @@ export const CategoriesTree = (props: CategoriesTreeProps) => {
 
     return (
         <>
-            <CategoriesTreeItem description={category?.description} name={category?.name} id={category?.id} level={level}/>
+            <CategoriesTreeItem description={category?.description} name={category?.name} id={category?.id} level={level} isFinal={category.isFinal} hasChildren={!!category.childCategories.length}/>
             {category.childCategories.map(childCategory => <CategoriesTree category={childCategory} level={level + 1} key={childCategory.id}/>)}
         </>
     )
