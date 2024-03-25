@@ -18,18 +18,16 @@ import {
   SelectValue,
 } from "@/shared/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ProductFormSchema, productFormSchema } from "../model/productFormSchema";
+import { createFormDataFromObject } from "@/shared/lib";
 
 export const CreateProductForm = () => {
   const [createProduct] = useCreateProductMutation();
   const { data: finalCategories, isLoading: isFinalCategoriesLoading } = useFinalCategoriesQuery();
-  const [categoryId, setCategoryId] = useState<number | null>(null);
-  const { data: properties, isLoading: isPropertiesLoading } =
-    useFindAllPropertiesByCategoryIdQuery({
-      id: categoryId,
-    });
+
+ 
 
   const productForm = useForm<ProductFormSchema>({
     resolver: zodResolver(productFormSchema),
@@ -43,9 +41,25 @@ export const CreateProductForm = () => {
       properties: [],
     },
   });
+
+  const { data: properties, isLoading: isPropertiesLoading } =
+  useFindAllPropertiesByCategoryIdQuery({
+    id: productForm.getValues('categoryId'),
+  });
+
+  useEffect(() => {
+    if (properties) productForm.setValue('properties', properties?.map(prop => ({ propertyId: prop.id, value: undefined })))
+  }, [JSON.stringify(properties)])
+
+  const handleChangeFile = (e) => {
+    console.log(e.target.files)
+    productForm.setValue('image', e.target.files[0])
+  }
+
+
   const onSubmit = (data: ProductFormSchema) => {
     const { amount, categoryId, description, name, price, properties, image } = data;
-    console.log(data);
+    
     createProduct({
       amount,
       categoryId,
@@ -78,11 +92,12 @@ export const CreateProductForm = () => {
           <FormField
             control={productForm.control}
             name="price"
+
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Цена продукта</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="введите цену продукта" {...field} />
+                  <Input type="number" placeholder="введите цену продукта" {...field} onChange={(event) => field.onChange(+event.target.value)} />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -96,7 +111,7 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Количество продуктов</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="введите количество продуктов" {...field} />
+                  <Input type="number" placeholder="введите количество продуктов" {...field} onChange={(event) => field.onChange(+event.target.value)} />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -124,7 +139,7 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Картинка продукта</FormLabel>
                 <FormControl>
-                  <Input type="file" placeholder="Картинка продукта" {...field} />
+                  <Input type="file" placeholder="Картинка продукта" onChange={e => handleChangeFile(e)} />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -138,7 +153,7 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Уникальный идентификатор</FormLabel>
                 <FormControl>
-                  <Select onValueChange={(e) => setCategoryId(+e)}>
+                  <Select onValueChange={(e) => { field.onChange(+e) }}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Категории" />
                     </SelectTrigger>
@@ -160,17 +175,17 @@ export const CreateProductForm = () => {
               </FormItem>
             )}
           />
-          {properties?.map((property) => (
+          {properties?.map((property, index) => (
             <FormField
               key={property.id}
               control={productForm.control}
-              name="properties"
+              name={`properties.${index}.value`}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{property.name}</FormLabel>
                   <FormControl>
                     {property.options.length ? (
-                      <Select key={property.id}>
+                      <Select key={property.id} onValueChange={e => field.onChange(e)} value={field.value}>
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Свойства" />
                         </SelectTrigger>
@@ -183,7 +198,7 @@ export const CreateProductForm = () => {
                         </SelectContent>
                       </Select>
                     ) : (
-                      <Input placeholder="Введите свойство" />
+                      <Input placeholder="Введите свойство" {...field} />
                     )}
                   </FormControl>
                   <FormDescription>This is your public display name.</FormDescription>

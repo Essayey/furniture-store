@@ -29,7 +29,7 @@ export class ProductsService {
     if (!category) {
       throw new BadRequestException('Категории с таким id не существует')
     }
-
+    console.log(category.id)
     const properties = await this.propertiesService.findAllByCategoryId(category.id)
 
 

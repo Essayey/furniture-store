@@ -13,6 +13,7 @@ import {
   UpdateProductPropertyDtoRequest,
   UpdateProductPropertyDtoResponse,
 } from "./productsDto";
+import { createFormDataFromObject } from "@/shared/lib";
 
 export const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -32,11 +33,21 @@ export const productApi = baseApi.injectEndpoints({
     }),
 
     createProduct: build.mutation<CreateProductDtoResponse, CreateProductDtoRequest>({
-      query: ({ amount, categoryId, description, img, name, price, properties }) => ({
-        url: "/products",
-        method: "POST",
-        body: { amount, categoryId, description, img, name, price, properties },
-      }),
+      query: (body) => {
+        const formData = new FormData()
+        formData.append("file", body.img)
+        // const formData = createFormDataFromObject(body)
+        // console.log(body)
+        for (const [key, value] of formData.entries()) {
+          console.log(key, ':', value);
+        }
+        return {
+          url: "/products",
+          method: "POST",
+          body: formData,
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }
+      },
       invalidatesTags: ["PRODUCTS_TAG"],
     }),
     pathProductById: build.mutation<PathProductByIdDtoResponse, PathProductByIdDtoRequest>({

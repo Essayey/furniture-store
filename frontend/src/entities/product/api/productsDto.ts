@@ -8,11 +8,12 @@ export type ProductByIdDtoResponse = Product;
 export type ProductByIdDtoRequest = { id: number };
 
 export type CreateProductDtoResponse = Product;
-export type CreateProductDtoRequest = Omit<Product, "properties"> & {
+export type CreateProductDtoRequest = Omit<Product, "properties" | "img"> & {
   properties: {
     propertyId: number;
     value: string;
   }[];
+  img: File
 };
 
 export type PathProductByIdDtoResponse = Product;

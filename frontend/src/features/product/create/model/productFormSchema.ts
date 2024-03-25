@@ -6,7 +6,7 @@ export const productFormSchema = z.object({
     .string({ required_error: "name field requierd!" })
     .min(2, { message: "name must be at least 2 characters" }),
   description: z.string({ required_error: "description field requierd!" }),
-  image: z.any(),
+  image: z.instanceof(File),
   categoryId: z
     .number({ required_error: "categoryId field requierd!" })
     .positive({ message: "categoryId cannot be negative " })
