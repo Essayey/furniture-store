@@ -4,6 +4,7 @@ import { UpdatePropertyDto } from './dto/update-property.dto';
 import { Property } from './properties.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { PropertyCategory } from './property-category.model';
+import sequelize from 'sequelize';
 
 @Injectable()
 export class PropertiesService {
@@ -31,6 +32,21 @@ export class PropertiesService {
     }))
 
     return properties
+  }
+
+  async findExcludedByCategoryId(id: number) {
+    // Находим все свойства в заданной категории
+    const propertyCategories = await this.propertyCategoryRepository.findAll({ where: { categoryId: id } });
+
+    // Извлекаем идентификаторы свойств в данной категории
+    const propertyIdsInCategory = propertyCategories.map(propertyCategory => propertyCategory.propertyId);
+
+    // Находим все свойства, которые не находятся в заданной категории
+    const excludedProperties = await this.propertyRepository.findAll({
+      where: { id: { [sequelize.Op.notIn]: propertyIdsInCategory } }
+    });
+
+    return excludedProperties;
   }
 
   async findOne(id: number) {

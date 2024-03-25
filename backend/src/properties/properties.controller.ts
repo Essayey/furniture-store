@@ -24,6 +24,11 @@ export class PropertiesController {
     return this.propertiesService.findAllByCategoryId(+id);
   }
 
+  @Get('findExcludedByCategoryId/:id')
+  findExcludedByCategoryId(@Param('id') id: string) {
+    return this.propertiesService.findExcludedByCategoryId(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.propertiesService.findOne(+id);
