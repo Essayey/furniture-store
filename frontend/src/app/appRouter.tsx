@@ -5,6 +5,7 @@ import { MainPage } from "@/pages/main";
 import { Routes } from "@/shared/consts";
 import { createBrowserRouter } from "react-router-dom";
 import { BaseLayout } from "./layouts/baseLayout";
+import { PropertiesPage } from "@/pages/admin/properties";
 
 export const AppRouter = () => {
   return createBrowserRouter([
@@ -34,6 +35,10 @@ export const AppRouter = () => {
             {
               path: Routes.products,
               element: <ProductsPage />,
+            },
+            {
+              path: Routes.properties,
+              element: <PropertiesPage />,
             },
           ],
         },

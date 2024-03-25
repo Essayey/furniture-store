@@ -11,6 +11,9 @@ export const AdminPage = () => {
       <Button asChild>
         <Link to={Routes.categories}>Категории</Link>
       </Button>
+      <Button asChild>
+        <Link to={Routes.properties}>Свойства</Link>
+      </Button>
       <Outlet />
     </div>
   );
