@@ -1,6 +1,7 @@
 import { TableCell, TableRow } from "@/shared/ui/table"
-import { EditPropertyDialog } from "../editProperty/ui/EditPropertyDialog"
-import { DeletePropertyDialog } from "../deleteProperty/ui/DeletePropertyDialog"
+import { EditPropertyDialog } from "../../editProperty/ui/EditPropertyDialog"
+import { DeletePropertyDialog } from "../../deleteProperty/ui/DeletePropertyDialog"
+
 
 type PropertyTableItemProps = {
     id: number

@@ -1,7 +1,8 @@
 import { useAllPropertiesQuery } from "@/entities/property"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/shared/ui/table"
 import { PropertyTableItem } from "./PropertyTableItem"
-import { CreatePropertyDialog } from "../createProperty/ui/CreatePropertyDialog"
+import { CreatePropertyDialog } from "../../createProperty/ui/CreatePropertyDialog"
+
 
 export const PropertyTable = () => {
     const { data: properties, isLoading } = useAllPropertiesQuery()

@@ -8,4 +8,5 @@ export {
   usePathPropertyByIdMutation,
   usePropertyByIdQuery,
   useLazyFindAllPropertiesByCategoryIdQuery,
+  useFindExcludedPropertiesByCategoryIdQuery
 } from "./api/propertyApi";

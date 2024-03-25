@@ -20,3 +20,6 @@ export type PathPropertyByIdDtoRequest = Partial<Property>;
 
 export type DeletePropertyByIdDtoResponse = void;
 export type DeletePropertyByIdDtoRequest = { id: number };
+
+export type FindExcludedPropertiesByCategoryIdDtoResponse = Property[]
+export type FindExcludedPropertiesByCategoryIdDtoRequest = { id: number }

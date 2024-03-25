@@ -77,7 +77,7 @@ export const categoryApi = baseApi.injectEndpoints({
         method: "PUT",
         body: { categoryId, propertyId },
       }),
-      invalidatesTags: ["CATEGORIES_TAG"],
+      invalidatesTags: ["CATEGORIES_TAG", "PROPERTY_CATEGORY_TAG"],
     }),
     setIsFinalCategory: build.mutation<SetIsFinalCategoryDtoResponse, SetIsFinalCategoryDtoRequest>(
       {
@@ -97,7 +97,7 @@ export const categoryApi = baseApi.injectEndpoints({
         url: `/categories/removePropertyFromCategory/${categoryId}/${propertyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["CATEGORIES_TAG"],
+      invalidatesTags: ["CATEGORIES_TAG", "PROPERTY_CATEGORY_TAG"],
     }),
   }),
 });

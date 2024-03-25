@@ -8,6 +8,8 @@ import {
   DeletePropertyByIdDtoResponse,
   FindAllPropertiesByCategoryIdDtoResponse,
   FindAllPropertiesByCategoryIdRequest,
+  FindExcludedPropertiesByCategoryIdDtoRequest,
+  FindExcludedPropertiesByCategoryIdDtoResponse,
   PathPropertyByIdDtoRequest,
   PathPropertyByIdDtoResponse,
   PropertyByIdDtoRequest,
@@ -38,6 +40,17 @@ export const propertyApi = baseApi.injectEndpoints({
         url: `/properties/findAllByCategoryId/${id}`,
         method: "GET",
       }),
+      providesTags: ["PROPERTY_CATEGORY_TAG"]
+    }),
+    findExcludedPropertiesByCategoryId: build.query<
+      FindExcludedPropertiesByCategoryIdDtoResponse,
+      FindExcludedPropertiesByCategoryIdDtoRequest
+    >({
+      query: ({ id }) => ({
+        url: `/properties/findExcludedByCategoryId/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["PROPERTY_CATEGORY_TAG"]
     }),
     createProperty: build.mutation<CreatePropertyDtoResponse, CreatePropertyDtoRequest>({
       query: ({ name, options, description, optional }) => ({
@@ -75,4 +88,5 @@ export const {
   usePathPropertyByIdMutation,
   usePropertyByIdQuery,
   useLazyFindAllPropertiesByCategoryIdQuery,
+  useFindExcludedPropertiesByCategoryIdQuery
 } = propertyApi;
