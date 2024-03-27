@@ -34,18 +34,11 @@ export const productApi = baseApi.injectEndpoints({
 
     createProduct: build.mutation<CreateProductDtoResponse, CreateProductDtoRequest>({
       query: (body) => {
-        const formData = new FormData()
-        formData.append("file", body.img)
-        // const formData = createFormDataFromObject(body)
-        // console.log(body)
-        for (const [key, value] of formData.entries()) {
-          console.log(key, ':', value);
-        }
+        const formData = createFormDataFromObject(body)
         return {
           url: "/products",
           method: "POST",
           body: formData,
-          headers: { 'Content-Type': 'multipart/form-data' }
         }
       },
       invalidatesTags: ["PRODUCTS_TAG"],
