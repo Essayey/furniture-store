@@ -4,6 +4,7 @@ import { HeartIcon, IconFlavor, LogoutIcon, ShoppingIcon } from "@/shared/assets
 import { Input, Select, SelectTrigger, SelectValue } from "@/shared/ui";
 import { MapPin, SearchIcon } from "lucide-react";
 import { Routes } from "@/shared/consts";
+import { CategorySelector } from "@/features/categorySelector";
 
 export const Header = () => {
   return (
@@ -36,11 +37,7 @@ export const Header = () => {
               <div>Мебельная компания</div>
             </Link>
           </div>
-          <Select>
-            <SelectTrigger className="flex p-6 justify-between w-[280px] text-2xl h-[48px] border-none focus:ring-0 rounded-xl bg-accentQuaternary">
-              <SelectValue placeholder="Каталог" />
-            </SelectTrigger>
-          </Select>
+          <CategorySelector />
         </div>
         <div className="relative ">
           <Input
