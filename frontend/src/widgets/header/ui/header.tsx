@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
 import { headerItems } from "../model/headerItems";
-import { IconFlavor } from "@/shared/assets";
+import { HeartIcon, IconFlavor, LogoutIcon, ShoppingIcon } from "@/shared/assets";
 import { Input, Select, SelectTrigger, SelectValue } from "@/shared/ui";
 import { MapPin, SearchIcon } from "lucide-react";
+import { Routes } from "@/shared/consts";
 
 export const Header = () => {
   return (
     <header>
-      <nav className="p-4">
-        <ul className="flex justify-between">
+      <nav className="p-4 pr-16">
+        <ul className="flex justify-between text-xl">
           <div className="flex gap-20">
             {headerItems.map((item) => (
               <li key={item.path}>
@@ -26,17 +27,17 @@ export const Header = () => {
           </div>
         </ul>
       </nav>
-      <div className="flex gap-16">
-        <div className="h-28 w-[776px] bg-accentTertiary rounded-r-[32px] flex items-center p-4 justify-between text-white">
+      <div className="flex gap-20 items-center">
+        <div className="h-20 w-[776px]  bg-accentTertiary rounded-r-[32px] flex items-center p-4 justify-between text-white">
           <div className="flex items-center">
             <IconFlavor />
-            <div className=" text-center">
-              <div className="text-5xl font-philosopher">Roomika</div>
+            <Link to={Routes.main} className=" text-center">
+              <div className="text-4xl font-philosopher">Roomika</div>
               <div>Мебельная компания</div>
-            </div>
+            </Link>
           </div>
           <Select>
-            <SelectTrigger className="flex p-6 justify-between w-[280px] text-2xl h-[74px] border-none focus:ring-0 rounded-xl bg-accentQuaternary">
+            <SelectTrigger className="flex p-6 justify-between w-[280px] text-2xl h-[48px] border-none focus:ring-0 rounded-xl bg-accentQuaternary">
               <SelectValue placeholder="Каталог" />
             </SelectTrigger>
           </Select>
@@ -44,10 +45,18 @@ export const Header = () => {
         <div className="relative ">
           <Input
             placeholder="Поиск по сайту"
-            className="pl-18 w-[601px] text-3xl h-[115px] rounded-[32px]"
+            className="px-20 w-[601px] text-2xl h-[80px] rounded-[32px]"
           />
-          <SearchIcon width={42} height={42} className="absolute -translate-y-20 right-8" />
+          <SearchIcon width={32} height={32} className="absolute -translate-y-14 right-16" />
         </div>
+        <Link to={Routes.cart}>
+          <ShoppingIcon width={50} height={50} />
+        </Link>
+        <Link to={Routes.cart}>
+          <HeartIcon width={50} height={50} />
+        </Link>
+
+        <LogoutIcon className="cursor-pointer" width={50} height={50} />
       </div>
     </header>
   );
