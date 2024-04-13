@@ -6,6 +6,7 @@ import { Routes } from "@/shared/consts";
 import { createBrowserRouter } from "react-router-dom";
 import { BaseLayout } from "./layouts/baseLayout";
 import { PropertiesPage } from "@/pages/admin/properties";
+import { CategoryPage } from "@/pages/category";
 
 export const AppRouter = () => {
   return createBrowserRouter([
@@ -23,6 +24,10 @@ export const AppRouter = () => {
         {
           path: Routes.cart,
           element: <CartPage />,
+        },
+        {
+          path: "/category/:categoryId",
+          element: <CategoryPage />,
         },
         {
           path: Routes.admin,

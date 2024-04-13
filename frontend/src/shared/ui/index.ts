@@ -24,3 +24,4 @@ export {
   DialogTrigger,
 } from "./dialog";
 export * from "./select";
+export * from "./card";

@@ -18,6 +18,9 @@ export const Header = () => {
         <Button asChild>
           <Link to={Routes.admin}>Admin page</Link>
         </Button>
+        <Button asChild>
+          <Link to={Routes.category}>Category</Link>
+        </Button>
       </div>
     </header>
   );
