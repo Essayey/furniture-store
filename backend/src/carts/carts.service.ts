@@ -1,26 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
+import { Cart } from './carts.model';
+import { InjectModel } from '@nestjs/sequelize';
+import { Product } from 'src/products/products.model';
+import { ProductsService } from 'src/products/products.service';
 
 @Injectable()
 export class CartsService {
-  create(createCartDto: CreateCartDto) {
-    return 'This action adds a new cart';
+  constructor(@InjectModel(Cart) private cartRepository: typeof Cart, 
+  private productService: ProductsService) { }
+
+  async getCartByUserId(userId: number) {
+    const carts = await this.cartRepository.findAll({ where: { userId } })
+    return carts
   }
 
-  findAll() {
-    return `This action returns all carts`;
+  async addProductToCart(userId: number, productId: number) {
+    const product = await this.productService.findOne(productId)
+    if (!product) {
+      throw new BadRequestException({message: 'Товара не существует'})
+    }
+    const cart = await this.cartRepository.findOne({ where: { userId, productId } })
+    if (!cart) {
+      return await this.cartRepository.create({ userId, productId, quantity: 1 })
+    }
+    throw new BadRequestException({message: 'Товар уже в корзине'})
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
+  async changeProductQuantity(userId: number, productId: number, quantity: number) {
+    const cart = await this.cartRepository.findOne({ where: { userId, productId } })
+    if (!cart) {
+      throw new BadRequestException({message: 'Товара или пользователя с таким id не существует'})
+    }
+    if (quantity < 1 || !Number.isInteger(quantity)) {
+      throw new BadRequestException({message: 'Количество должно быть больше нуля и являться целым числом'})
+    }
+    cart.set({ quantity })
+    cart.save()
+    return cart
   }
 
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
-  }
+  async removeProductFromCart(userId: number, productId: number) {
+    const cart = await this.cartRepository.findOne({ where: { userId, productId } })
+    if (!cart) {
+      throw new BadRequestException({message: 'Товара или пользователя с таким id не существует'})
+    }
+    cart.destroy()
 
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
+    return 'Успешно'
   }
 }
