@@ -7,6 +7,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { createDiskStorage } from 'src/lib/createDiskStorage';
 import { FormDataRequest } from 'nestjs-form-data';
 import { UpdateProductPropertyDto } from './dto/update-product-property.dto';
+import { FindAllProductsDto } from './dto/find-all-products.dto';
 
 @ApiTags('Товары')
 @Controller('products')
@@ -32,9 +33,14 @@ export class ProductsController {
     return this.productsService.create(body, img.filename);
   }
 
+  @Post('/findAllByFilters')
+  findAllByFilters(@Body() findAllProductsDto: FindAllProductsDto) {
+    return this.productsService.findAll(findAllProductsDto);
+  }
+
   @Get()
   findAll() {
-    return this.productsService.findAll();
+    return this.productsService.findAll({});
   }
 
   @Get(':id')

@@ -9,6 +9,7 @@ import { ProductProperty } from './product-property.model';
 import { Property } from 'src/properties/properties.model';
 import sequelize from 'sequelize';
 import { UpdateProductPropertyDto } from './dto/update-product-property.dto';
+import { FindAllProductsDto } from './dto/find-all-products.dto';
 
 @Injectable()
 export class ProductsService {
@@ -72,23 +73,37 @@ export class ProductsService {
 
     const product = await this.productRepository.create({ ...(createProductDto as ProductCreationAttributes), img });
 
-    for(let property of createProductDto.properties){
+    for (let property of createProductDto.properties) {
       await this.productPropertyRepository.create({ productId: product.id, propertyId: property.propertyId, value: property.value })
     }
-    
-    
+
+
     const resultProduct = await this.findOne(product.id)
 
     return resultProduct
   }
 
-  async findAll() {
+  async findAll(findAllProductsDto: FindAllProductsDto) {
+    const productsWhere: any = {};
+    if (findAllProductsDto?.categoryId)
+      productsWhere.categoryId = +findAllProductsDto.categoryId;
+
+    const propertiesWhere: any = findAllProductsDto?.properties ? findAllProductsDto.properties : [];
+
+
+    console.log(productsWhere)
+    console.log(propertiesWhere)
     const products = await this.productRepository.findAll({
+      where: productsWhere,
       include: [
         {
           model: Property,
           attributes: ['id', 'name'], // Выбираем id и имя свойства
-          through: { attributes: ['value'], as: 'propertyValue' }, // Выбираем только значение свойства
+          through: {
+            attributes: ['value'],
+            as: 'propertyValue',
+            where: propertiesWhere
+          }, // Выбираем только значение свойства
           required: true,
           as: 'properties',
         }
@@ -114,7 +129,7 @@ export class ProductsService {
       ]
     })
     if (!product) {
-      throw new BadRequestException({message: 'Товара не существует'})
+      throw new BadRequestException({ message: 'Товара не существует' })
     }
 
     product.set('img', this.createProductImgUrl(product.img))
@@ -135,7 +150,7 @@ export class ProductsService {
   }
 
   async updateProductProperty(updateProductPropertyDto: UpdateProductPropertyDto) {
-    const productProperty = await this.productPropertyRepository.findOne({where: {productId: updateProductPropertyDto.productId, propertyId: updateProductPropertyDto.propertyId}})
+    const productProperty = await this.productPropertyRepository.findOne({ where: { productId: updateProductPropertyDto.productId, propertyId: updateProductPropertyDto.propertyId } })
 
     if (!productProperty) {
       throw new BadRequestException(`Неверные id`)
