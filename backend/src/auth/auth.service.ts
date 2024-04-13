@@ -4,6 +4,7 @@ import { CreateUserDto } from 'src/users/dto/create-user-dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs'
 import { User } from 'src/users/users.model';
+import { LoginDto } from 'src/users/dto/login-dto';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
     constructor(private userService: UsersService,
         private jwtService: JwtService) { }
         
-    async login(userDto: CreateUserDto) {
+    async login(userDto: LoginDto) {
         const user = await this.validateUser(userDto)
         return this.generateToken(user)
     }
@@ -26,6 +27,10 @@ export class AuthService {
         return this.generateToken(user)
     }
 
+    async check() {
+        return "OK"
+    }
+
     private async generateToken(user: User) {
         const payload = {email: user.email, id: user.id, roles: user.roles}
 
@@ -34,7 +39,7 @@ export class AuthService {
         }
     }
 
-    private async validateUser(userDto: CreateUserDto) {
+    private async validateUser(userDto: LoginDto) {
         const user = await this.userService.getUserByEmail(userDto.email)
         const passwordEquals = await bcrypt.compare(userDto.password, user.password)
         // console.log('1231231')
