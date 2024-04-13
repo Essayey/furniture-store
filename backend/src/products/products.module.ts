@@ -21,6 +21,9 @@ import { Property } from 'src/properties/properties.model';
     SequelizeModule.forFeature([Product, Category, Review, Cart, OrderItem, ProductProperty, Property]),
     PropertiesModule,
     CategoriesModule
+  ],
+  exports: [
+    ProductsService
   ]
 })
 export class ProductsModule {}

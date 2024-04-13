@@ -113,6 +113,9 @@ export class ProductsService {
         }
       ]
     })
+    if (!product) {
+      throw new BadRequestException({message: 'Товара не существует'})
+    }
 
     product.set('img', this.createProductImgUrl(product.img))
 

@@ -9,29 +9,24 @@ import { ApiTags } from '@nestjs/swagger';
 export class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartsService.create(createCartDto);
+  @Get(':userId')
+  async getCartByUserId(@Param('userId') userId: number) {
+    return await this.cartsService.getCartByUserId(+userId)
   }
 
-  @Get()
-  findAll() {
-    return this.cartsService.findAll();
+  @Post(':userId/:productId')
+  async addProductToCart(@Param('userId') userId: number, @Param('productId') productId: number) {
+    return await this.cartsService.addProductToCart(+userId, +productId)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartsService.findOne(+id);
+  @Post(':userId/:productId/:quantity')
+  async changeProductQuantity(@Param('userId') userId: number, @Param('productId') productId: number, @Param('quantity') quantity: number) {
+    return await this.cartsService.changeProductQuantity(+userId, +productId, +quantity)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartsService.update(+id, updateCartDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartsService.remove(+id);
+  @Delete(':userId/:productId')
+  async removeProductFromCart(@Param('userId') userId: number, @Param('productId') productId: number) {
+    return await this.cartsService.removeProductFromCart(+userId, +productId) 
   }
 
 }
