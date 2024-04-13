@@ -27,8 +27,6 @@ export const CreateProductForm = () => {
   const [createProduct] = useCreateProductMutation();
   const { data: finalCategories, isLoading: isFinalCategoriesLoading } = useFinalCategoriesQuery();
 
- 
-
   const productForm = useForm<ProductFormSchema>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
@@ -43,23 +41,26 @@ export const CreateProductForm = () => {
   });
 
   const { data: properties, isLoading: isPropertiesLoading } =
-  useFindAllPropertiesByCategoryIdQuery({
-    id: productForm.getValues('categoryId'),
-  });
+    useFindAllPropertiesByCategoryIdQuery({
+      id: productForm.getValues("categoryId"),
+    });
 
   useEffect(() => {
-    if (properties) productForm.setValue('properties', properties?.map(prop => ({ propertyId: prop.id, value: undefined })))
-  }, [JSON.stringify(properties)])
+    if (properties)
+      productForm.setValue(
+        "properties",
+        properties?.map((prop) => ({ propertyId: prop.id, value: undefined })),
+      );
+  }, [JSON.stringify(properties)]);
 
   const handleChangeFile = (e) => {
-    console.log(e.target.files)
-    productForm.setValue('image', e.target.files[0])
-  }
-
+    console.log(e.target.files);
+    productForm.setValue("image", e.target.files[0]);
+  };
 
   const onSubmit = (data: ProductFormSchema) => {
     const { amount, categoryId, description, name, price, properties, image } = data;
-    
+
     createProduct({
       amount,
       categoryId,
@@ -92,12 +93,16 @@ export const CreateProductForm = () => {
           <FormField
             control={productForm.control}
             name="price"
-
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Цена продукта</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="введите цену продукта" {...field} onChange={(event) => field.onChange(+event.target.value)} />
+                  <Input
+                    type="number"
+                    placeholder="введите цену продукта"
+                    {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -111,7 +116,12 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Количество продуктов</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="введите количество продуктов" {...field} onChange={(event) => field.onChange(+event.target.value)} />
+                  <Input
+                    type="number"
+                    placeholder="введите количество продуктов"
+                    {...field}
+                    onChange={(event) => field.onChange(+event.target.value)}
+                  />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -139,7 +149,11 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Картинка продукта</FormLabel>
                 <FormControl>
-                  <Input type="file" placeholder="Картинка продукта" onChange={e => handleChangeFile(e)} />
+                  <Input
+                    type="file"
+                    placeholder="Картинка продукта"
+                    onChange={(e) => handleChangeFile(e)}
+                  />
                 </FormControl>
                 <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
@@ -153,7 +167,11 @@ export const CreateProductForm = () => {
               <FormItem>
                 <FormLabel>Уникальный идентификатор</FormLabel>
                 <FormControl>
-                  <Select onValueChange={(e) => { field.onChange(+e) }}>
+                  <Select
+                    onValueChange={(e) => {
+                      field.onChange(+e);
+                    }}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Категории" />
                     </SelectTrigger>
@@ -185,7 +203,11 @@ export const CreateProductForm = () => {
                   <FormLabel>{property.name}</FormLabel>
                   <FormControl>
                     {property.options.length ? (
-                      <Select key={property.id} onValueChange={e => field.onChange(e)} value={field.value}>
+                      <Select
+                        key={property.id}
+                        onValueChange={(e) => field.onChange(e)}
+                        value={field.value}
+                      >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Свойства" />
                         </SelectTrigger>

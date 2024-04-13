@@ -6,6 +6,10 @@ import { Routes } from "@/shared/consts";
 import { createBrowserRouter } from "react-router-dom";
 import { BaseLayout } from "./layouts/baseLayout";
 import { PropertiesPage } from "@/pages/admin/properties";
+import { CategoryPage } from "@/pages/category";
+import { ContactsPage } from "@/pages/contacts";
+import { DeliveryPage } from "@/pages/delivery";
+import { BuyersPage } from "@/pages/buyers/ui";
 
 export const AppRouter = () => {
   return createBrowserRouter([
@@ -23,6 +27,22 @@ export const AppRouter = () => {
         {
           path: Routes.cart,
           element: <CartPage />,
+        },
+        {
+          path: Routes.contacts,
+          element: <ContactsPage />,
+        },
+        {
+          path: Routes.delivery,
+          element: <DeliveryPage />,
+        },
+        {
+          path: Routes.buyers,
+          element: <BuyersPage />,
+        },
+        {
+          path: "/category/:categoryId",
+          element: <CategoryPage />,
         },
         {
           path: Routes.admin,

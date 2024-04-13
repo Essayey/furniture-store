@@ -8,4 +8,7 @@ export enum Routes {
   categories = "categories",
   properties = "properties",
   products = "products",
+  contacts = "contacts",
+  buyers = "buyers",
+  delivery = "delivery",
 }

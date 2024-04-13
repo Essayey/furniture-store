@@ -1,0 +1,1 @@
+export { IconFlavor } from "./flavorIcon";
