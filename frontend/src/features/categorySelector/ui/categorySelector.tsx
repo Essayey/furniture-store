@@ -10,7 +10,7 @@ const RenderCategories = (props: { category: Category, level: number }) => {
 
 
     return (
-        <>  
+        <>
             {level !== 1 && (category.isFinal ? (<Link to={'/product'} className={`text-${5 - level}xl`}>{category.name}</Link>) : <div className={`text-${5 - level}xl`}>{category.name}</div >)}
             {
                 !category.isFinal &&
@@ -29,7 +29,8 @@ export const CategorySelector = () => {
     const { data: categories, isLoading } = useAllCategoriesQuery()
 
 
-    if (isLoading) return null
+    if (isLoading || !categories?.length) return null
+    console.log(categories)
 
     return (
         <NavigationMenu>
@@ -37,16 +38,16 @@ export const CategorySelector = () => {
                 <NavigationMenuTrigger>Каталог</NavigationMenuTrigger>
                 <NavigationMenuContent className="h-[850px] w-[1500px]">
                     <div>
-                        <Tabs defaultValue={String(categories && categories[0].childCategories[0].id)} className="flex">
-                            <TabsList className="flex-col">
+                        <Tabs defaultValue={String(categories && categories[0]?.childCategories[0]?.id)} className="flex gap-10">
+                            <TabsList className="flex-col items-start">
                                 {categories && categories[0].childCategories.map(category => (
-                                    <TabsTrigger value={String(category.id)} className="text-2xl">{category.name}</TabsTrigger>
+                                    <TabsTrigger value={String(category.id)} className="text-2xl text-start">{category.name}</TabsTrigger>
                                 ))}
                             </TabsList>
                             {categories && categories[0].childCategories.map(category =>
                                 <TabsContent value={String(category.id)} className="w-[1200px]">
-                                    <div className="text-5xl">{category.name}</div>
-                                    <div className="grid grid-cols-4 gap-y-24">
+                                    <div className="text-5xl mb-8">{category.name}</div>
+                                    <div className="grid grid-cols-3 gap-y-24">
                                         <RenderCategories category={category} level={1} key={category.id} />
                                     </div>
                                 </TabsContent >
