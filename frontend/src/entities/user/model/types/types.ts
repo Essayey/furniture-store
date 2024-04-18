@@ -1,10 +1,10 @@
 export interface User {
-    id: string
-    firstName: string
-    lastName: string
+  id: number;
+  firstName: string;
+  lastName: string;
 }
 
 export interface UserSchema {
-    authData?: User | undefined
-    initialized: boolean
+  authData?: User | undefined;
+  initialized: boolean;
 }

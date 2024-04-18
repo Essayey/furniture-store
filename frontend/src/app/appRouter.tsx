@@ -76,7 +76,7 @@ export const AppRouter = () => {
         },
         {
           path: Routes.admin,
-          element: <RequireAuth><AdminPage /></RequireAuth>,
+          element:<AdminPage />,
           children: [
             {
               path: Routes.categories,

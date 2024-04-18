@@ -1,6 +1,7 @@
 import { Property } from "@/entities/property";
 
 export type Product = {
+  id: number;
   name: string;
   description: string;
   img: string;
