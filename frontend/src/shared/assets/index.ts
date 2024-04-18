@@ -3,3 +3,4 @@ export { ShoppingIcon } from "./shoppingCart";
 export { LogoutIcon } from "./LogoutIcon";
 export { HeartIcon } from "./heartIcon";
 export { FlavorFooterIcon } from "./flavorFooterIcon";
+export { FlavorGreenIcon } from './flavorGreen'

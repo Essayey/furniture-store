@@ -1,20 +1,35 @@
 import { baseApi } from "@/shared/api";
+import { AuthDtoRequest, AuthDtoResponse, CheckDtoRequest, CheckDtoResponse, RegisterDtoRequest, RegisterDtoResponse } from "./dto";
 
-export const categoryApi = baseApi.injectEndpoints({
+
+
+export const authApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        register: build.query<AllCategoriesDtoResponse, AllCategoriesDtoRequset>({
-            query: () => ({
-                url: `/categories`,
-                method: "GET",
+        auth: build.query<AuthDtoResponse, AuthDtoRequest>({
+            query: (body) => ({
+                url: `/auth/login`,
+                method: "POST",
+                body
             }),
-            providesTags: ["CATEGORIES_TAG"],
         }),
-        login: build.query<AllCategoriesDtoResponse, AllCategoriesDtoRequset>({
+        register: build.query<RegisterDtoResponse, RegisterDtoRequest>({
+            query: (body) => ({
+                url: `/auth/registration`,
+                method: "POST",
+                body
+            }),
+        }),
+        check: build.query<CheckDtoResponse, CheckDtoRequest>({
             query: () => ({
-                url: `/categories`,
+                url: `/auth/check`,
                 method: "GET",
             }),
-            providesTags: ["CATEGORIES_TAG"],
         }),
     }),
-});
+})
+
+export const {
+    useLazyAuthQuery,
+    useLazyCheckQuery,
+    useLazyRegisterQuery
+} = authApi

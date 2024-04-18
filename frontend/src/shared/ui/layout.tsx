@@ -8,7 +8,7 @@ type LayoutProps = {
 export const Layout = (props: LayoutProps) => {
   const { footer, navbar } = props;
   return (
-    <div className="flex flex-col min-h-screen w-screen bg-backgroundColor">
+    <div className="flex flex-col min-h-screen w-screen bg-white">
       {navbar}
       <div className="flex-1">
         <div>

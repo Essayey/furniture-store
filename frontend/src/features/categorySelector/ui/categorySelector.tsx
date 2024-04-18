@@ -1,7 +1,8 @@
 import { Category, useAllCategoriesQuery } from "@/entities/category"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/shared/ui/navigation-menu"
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuTrigger } from "@/shared/ui/navigation-menu"
 import { Link } from "react-router-dom"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs"
+import { NavigationMenuLink } from "@radix-ui/react-navigation-menu"
 
 
 const RenderCategories = (props: { category: Category, level: number }) => {
@@ -11,7 +12,11 @@ const RenderCategories = (props: { category: Category, level: number }) => {
 
     return (
         <>
-            {level !== 1 && (category.isFinal ? (<Link to={'/product'} className={`text-${5 - level}xl`}>{category.name}</Link>) : <div className={`text-${5 - level}xl`}>{category.name}</div >)}
+            {level !== 1 && (category.isFinal ? (
+                <NavigationMenuLink>
+                    <Link to={`/catalog?category=${category.id}`} className={`text-${5 - level}xl`}>{category.name}</Link>
+                </NavigationMenuLink >
+            ) : <div className={`text-${5 - level}xl`}>{category.name}</div >)}
             {
                 !category.isFinal &&
                 category.childCategories.map(category =>

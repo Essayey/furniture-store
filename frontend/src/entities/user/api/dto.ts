@@ -1,16 +1,20 @@
-export type RegisterDtoResponse = {
+export type AuthDtoResponse = {
+    token: string
+}
 
+export type AuthDtoRequest = {
+    email: string
+    password: string
+}
+
+export type CheckDtoResponse = void
+export type CheckDtoRequest = void
+
+export type RegisterDtoResponse = {
+    token: string
 }
 
 export type RegisterDtoRequest = {
-    
-}
-
-export type LoginDtoResponse = {
-    
-}
-
-
-export type LoginDtoRequest = {
-    
+    login: string
+    password: string
 }

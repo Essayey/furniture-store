@@ -3,19 +3,45 @@ import { AdminPage, CategoriesPage, ProductsPage } from "@/pages/admin";
 import { CartPage } from "@/pages/cart";
 import { MainPage } from "@/pages/main";
 import { Routes } from "@/shared/consts";
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import { BaseLayout } from "./layouts/baseLayout";
 import { PropertiesPage } from "@/pages/admin/properties";
 import { CategoryPage } from "@/pages/category";
 import { ContactsPage } from "@/pages/contacts";
 import { DeliveryPage } from "@/pages/delivery";
 import { BuyersPage } from "@/pages/buyers/ui";
+import { AuthPage } from "@/pages/auth";
+import { useSelector } from "react-redux";
+
+
+import { type JSX } from 'react'
+import { selectUserAuthData } from "@/entities/user";
+import { CatalogPage } from "@/pages/catalog";
+
+export const RequireAuth = ({ children }: { children: JSX.Element }) => {
+  const auth = useSelector(selectUserAuthData)
+
+  if (!auth) {
+    return <Navigate to={Routes.auth} replace={true}/>
+  }
+
+  return children
+}
+
 
 export const AppRouter = () => {
   return createBrowserRouter([
     {
       element: <BaseLayout />,
       children: [
+        {
+          path: Routes.catalog,
+          element: <CatalogPage></CatalogPage>
+        },
+        {
+          path: Routes.auth,
+          element: <AuthPage />
+        },
         {
           path: Routes.main,
           element: <MainPage />,
@@ -26,7 +52,11 @@ export const AppRouter = () => {
         },
         {
           path: Routes.cart,
-          element: <CartPage />,
+          element: (
+            <RequireAuth>
+              <CartPage />
+            </RequireAuth>
+          )
         },
         {
           path: Routes.contacts,
@@ -46,7 +76,7 @@ export const AppRouter = () => {
         },
         {
           path: Routes.admin,
-          element: <AdminPage />,
+          element: <RequireAuth><AdminPage /></RequireAuth>,
           children: [
             {
               path: Routes.categories,
